@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://scenes/control/joypad.gd" type="Script" id=1]
+[ext_resource path="res://scenes/control/stick.tscn" type="PackedScene" id=2]
+
+[node name="joypad" type="Control"]
+script = ExtResource( 1 )
+
+[node name="left_stick" parent="." instance=ExtResource( 2 )]
+position = Vector2( 151.103, 443.034 )
+
+[node name="right_stick" parent="." instance=ExtResource( 2 )]
+position = Vector2( 875, 444 )
+joy_id = 1
+[connection signal="control_signal" from="left_stick" to="." method="_on_left_stick_control_signal"]
+[connection signal="control_signal" from="right_stick" to="." method="_on_right_stick_control_signal"]

@@ -1,0 +1,57 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://scenes/piece.gd" type="Script" id=1]
+[ext_resource path="res://assets/pieces/shadow.png" type="Texture" id=2]
+[ext_resource path="res://materials/outline_material.tres" type="Material" id=3]
+[ext_resource path="res://assets/pieces/piece.png" type="Texture" id=4]
+[ext_resource path="res://scenes/smoke.tscn" type="PackedScene" id=5]
+[ext_resource path="res://assets/sound/sfx/fall.wav" type="AudioStream" id=6]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 32.1682, 56.3549 )
+
+[node name="piece" type="KinematicBody2D"]
+position = Vector2( 640, 380 )
+script = ExtResource( 1 )
+sprite_index = 4
+
+[node name="sombra" type="Sprite" parent="."]
+scale = Vector2( 0.8, 0.8 )
+texture = ExtResource( 2 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="sprite" type="Sprite" parent="."]
+material = ExtResource( 3 )
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 4 )
+offset = Vector2( 0, -110 )
+hframes = 4
+region_rect = Rect2( 0, 640, 512, 128 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="area" type="Area2D" parent="."]
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="colisao" type="CollisionShape2D" parent="area"]
+position = Vector2( 0, -45.0942 )
+shape = SubResource( 1 )
+
+[node name="smoke" parent="." instance=ExtResource( 5 )]
+
+[node name="sfx" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 6 )
+
+[node name="lbl_pos" type="Label" parent="."]
+visible = false
+margin_left = -20.3848
+margin_top = -66.2506
+margin_right = 19.6152
+margin_bottom = -52.2506
+[connection signal="input_event" from="." to="." method="_on_piece_input_event"]
+[connection signal="input_event" from="area" to="." method="_on_area_input_event"]
